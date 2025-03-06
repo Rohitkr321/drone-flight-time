@@ -28,6 +28,11 @@ function checkAuth() {
             window.location.href = "dashboard.html";
         }
     }
+    else if (window.location.pathname.includes("/")) {
+        if (token) {
+            window.location.href = "dashboard.html";
+        }
+    }
 }
 
 function setupValidation() {
@@ -139,7 +144,7 @@ async function fetchFlightTime() {
         });
 
         if (response.status === 401 || response.status === 403) {
-            logout(); // Call logout function on unauthorized response
+            logout();
             return;
         }
 
@@ -159,8 +164,8 @@ async function fetchFlightTime() {
 }
 
 function logout() {
-    localStorage.removeItem("token"); // Remove token
-    window.location.href = "index.html"; // Redirect to login
+    localStorage.removeItem("token");
+    window.location.href = "index.html";
 }
 
 function displayResults(data) {
@@ -172,9 +177,26 @@ function displayResults(data) {
         return;
     }
 
+    let totalSeconds = 0;
+
     data.forEach(row => {
+        const timeParts = row.total_flight_time_hms.split(":").map(Number);
+        const seconds = timeParts[0] * 3600 + timeParts[1] * 60 + timeParts[2]; // Convert HH:MM:SS to total seconds
+        totalSeconds += seconds;
+
         const tr = document.createElement("tr");
         tr.innerHTML = `<td>${row.drone_code}</td><td>${row.total_flight_time_hms}</td>`;
         tbody.appendChild(tr);
     });
+
+    // Convert totalSeconds back to HH:MM:SS format
+    const totalHrs = Math.floor(totalSeconds / 3600);
+    const totalMins = Math.floor((totalSeconds % 3600) / 60);
+    const totalSecs = totalSeconds % 60;
+    const totalTimeHMS = `${String(totalHrs).padStart(2, "0")}:${String(totalMins).padStart(2, "0")}:${String(totalSecs).padStart(2, "0")}`;
+
+    const totalRow = document.createElement("tr");
+    totalRow.innerHTML = `<td><strong>Total Flight Time</strong></td><td><strong>${totalTimeHMS}</strong></td>`;
+    tbody.appendChild(totalRow);
 }
+
