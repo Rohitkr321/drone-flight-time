@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drone Flight Time Tracker</title>
+    <link rel="stylesheet" href="index.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="input-section">
+            <h1>Drone Flight Time</h1>
+            <div class="card">
+                <h2>Enter Drone Codes & Date Range</h2>
+                <textarea id="droneCodes" placeholder="Enter drone codes, comma-separated"></textarea>
+                <div class="date-inputs">
+                    <label>Start Date:</label>
+                    <input type="date" id="startDate">
+                    <label>End Date:</label>
+                    <input type="date" id="endDate">
+                </div>
+                <button id="fetchButton"  disabled>Get Flight Time</button>
+            </div>
+        </div>
+
+        <div class="output-section">
+            <h2>Flight Time Data</h2>
+            <div class="card">
+                <table id="resultTable">
+                    <thead>
+                        <tr>
+                            <th>Drone Code</th>
+                            <th>Total Flight Time (HH:MM:SS)</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
