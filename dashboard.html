@@ -8,6 +8,8 @@
     <script defer src="script.js"></script>
 </head>
 <body>
+    <button id="logoutButton" class="logout-btn">Logout</button> <!-- Logout Button -->
+
     <div class="container">
         <div class="input-section">
             <h1>Drone Flight Time</h1>
@@ -20,7 +22,7 @@
                     <label>End Date:</label>
                     <input type="date" id="endDate">
                 </div>
-                <button id="fetchButton"  disabled>Get Flight Time</button>
+                <button id="fetchButton" disabled>Get Flight Time</button>
             </div>
         </div>
 
@@ -39,5 +41,12 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById("logoutButton").addEventListener("click", function() {
+            localStorage.clear(); // Clears local storage
+            window.location.reload(); // Reloads the page
+        });
+    </script>
 </body>
 </html>
